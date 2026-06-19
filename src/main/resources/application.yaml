@@ -4,9 +4,9 @@ spring:
   cloud:
     gateway:
       httpserver:
-        wiretap: true
+        wiretap: false
       httpclient:
-        wiretap: true
+        wiretap: false
       routes:
         - id: user-service
           order: 10
@@ -37,8 +37,8 @@ server:
 
 logging:
   level:
-    org.springframework.cloud.getaway: DEBUG
-    org.springframework.http.server.reactive: DEBUG
-    org.springframework.web.reactive: DEBUG
-    org.springframework.boot.autoconfigure.web: DEBUG
-    reactor.netty: DEBUG
+    org.springframework.cloud.getaway: WARN
+    org.springframework.http.server.reactive: WARN
+    org.springframework.web.reactive: WARN
+    org.springframework.boot.autoconfigure.web: WARN
+    reactor.netty: WARN
