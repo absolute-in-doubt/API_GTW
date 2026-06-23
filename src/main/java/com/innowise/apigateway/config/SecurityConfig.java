@@ -9,6 +9,8 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.server.resource.web.server.authentication.ServerBearerTokenAuthenticationConverter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.util.pattern.PathPattern;
 import org.springframework.web.util.pattern.PathPatternParser;
 import reactor.core.publisher.Mono;
@@ -31,18 +33,11 @@ public class SecurityConfig {
 
     @Bean
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http,
-                                                  ServerAuthenticationConverter jwtBearerTokenConverter){
+                                                  ServerAuthenticationConverter jwtBearerTokenConverter,
+                                                  CorsConfigurationSource corsConfigurationSource){
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
-                .cors(cors -> cors.configurationSource(request -> {
-                    var config = new org.springframework.web.cors.CorsConfiguration();
-                    config.setAllowedOriginPatterns(List.of("*"));
-                    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    config.setAllowedHeaders(List.of("*"));
-                    config.setAllowCredentials(true);
-                    config.setMaxAge(3600L);
-                    return config;
-                }))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .authorizeExchange(authorizeExchangeSpec ->
                     authorizeExchangeSpec
                             .pathMatchers(properties.publicPaths().toArray(String[]::new)).permitAll()
@@ -54,6 +49,19 @@ public class SecurityConfig {
                                 .bearerTokenConverter(jwtBearerTokenConverter)
                 )
                 .build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        return request -> {
+            var config = new org.springframework.web.cors.CorsConfiguration();
+            config.setAllowedOriginPatterns(List.of("*"));
+            config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+            config.setAllowedHeaders(List.of("*"));
+            config.setAllowCredentials(true);
+            config.setMaxAge(3600L);
+            return config;
+        };
     }
 
     /**
