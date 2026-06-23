@@ -19,8 +19,8 @@ import java.util.List;
 @EnableConfigurationProperties(SecurityProperties.class)
 public class SecurityConfig {
 
-    private SecurityProperties properties;
-    private List<PathPattern> compiledPublicPathPatterns;
+    private final SecurityProperties properties;
+    private final List<PathPattern> compiledPublicPathPatterns;
     private final PathPatternParser parser = new PathPatternParser();
 
     public SecurityConfig(SecurityProperties properties){
