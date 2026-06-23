@@ -23,14 +23,16 @@ spring:
           uri: ${ORDER_SERVICE_BASE_URL}
           predicates:
             - Path=/api/v1/orders/**,/api/v1/users/**/orders
-  security:
-    publicPaths:
-      - /api/v1/auth/login
-      - /api/v1/auth/register
     oauth2:
       resourceserver:
         jwt:
           jwk-set-uri: ${JWKS_URL}
+
+application:
+  security:
+    publicPaths:
+      - /api/v1/auth/login
+      - /api/v1/auth/register
 
 server:
   port: 8083
