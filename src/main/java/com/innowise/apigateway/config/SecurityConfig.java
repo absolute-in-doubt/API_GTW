@@ -58,7 +58,7 @@ public class SecurityConfig {
 
     /**
      * returns null on public paths making the JwtFilter, provided by oauth2ResourceServer, think that there were no Bearer token
-     * @return
+     * @return skipPublicPathsConverter converter that returns null on public paths
      */
     @Bean
     ServerAuthenticationConverter skipPublicPathsConverter(){
