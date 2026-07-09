@@ -23,7 +23,7 @@ spring:
           uri: ${ORDER_SERVICE_BASE_URL}
           predicates:
             - Path=/api/v1/orders/**,/api/v1/users/**/orders
-        - id: order-service
+        - id: payment-service
           order: 3
           uri: ${PAYMENT_SERVICE_BASE_URL}
           predicates:
