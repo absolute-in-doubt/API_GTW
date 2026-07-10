@@ -23,6 +23,11 @@ spring:
           uri: ${ORDER_SERVICE_BASE_URL}
           predicates:
             - Path=/api/v1/orders/**,/api/v1/users/**/orders
+        - id: payment-service
+          order: 3
+          uri: ${PAYMENT_SERVICE_BASE_URL}
+          predicates:
+            - Path=/api/v1/payments/**
     oauth2:
       resourceserver:
         jwt:
