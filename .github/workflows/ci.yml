@@ -11,7 +11,6 @@ permissions:
 jobs:
 
   build:
-    needs: [test, sonar]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
